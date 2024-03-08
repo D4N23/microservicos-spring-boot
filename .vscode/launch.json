@@ -1,0 +1,46 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "ApiGatewayApplication",
+            "request": "launch",
+            "mainClass": "com.apigateway.ApiGatewayApplication",
+            "projectName": "api-gateway",
+            "vmArgs": " -Dcom.sun.management.jmxremote"
+        },
+        {
+            "type": "java",
+            "name": "RegisterServeApplication",
+            "request": "launch",
+            "mainClass": "com.registerserve.registerserve.RegisterServeApplication",
+            "projectName": "register-serve"
+        },
+        {
+            "type": "java",
+            "name": "EmployeeServiceApplication",
+            "request": "launch",
+            "mainClass": "com.microservices.employeeservice.EmployeeServiceApplication",
+            "projectName": "employee-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-DepartmentServiceApplication<department-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.microservices.departmentservice.DepartmentServiceApplication",
+            "projectName": "department-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ConfigServeApplication<config-serve>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.microservices.configserve.ConfigServeApplication",
+            "projectName": "config-serve",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
