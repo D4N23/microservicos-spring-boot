@@ -2,6 +2,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "OrganizationServiceApplication",
+            "request": "launch",
+            "mainClass": "com.organizationservice.organizationservice.OrganizationServiceApplication"
+        },
+        {
+            "type": "java",
             "name": "ApiGatewayApplication",
             "request": "launch",
             "mainClass": "com.apigateway.ApiGatewayApplication",
@@ -39,6 +45,16 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "com.microservices.configserve.ConfigServeApplication",
             "projectName": "config-serve",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-OrganizationServiceApplication<organization-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.organizationservice.organizationservice.OrganizationServiceApplication",
+            "projectName": "organization-service",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
