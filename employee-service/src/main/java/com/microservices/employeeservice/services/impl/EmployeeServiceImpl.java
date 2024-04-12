@@ -1,21 +1,18 @@
 package com.microservices.employeeservice.services.impl;
 
-// import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-// import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.microservices.employeeservice.dtos.ApiResponseDto;
 import com.microservices.employeeservice.dtos.DepartmentDto;
 import com.microservices.employeeservice.dtos.EmployeeDto;
+import com.microservices.employeeservice.dtos.OrganizationDto;
 import com.microservices.employeeservice.entity.Employee;
 import com.microservices.employeeservice.exceptions.EmployeeEmailAlreadyExistsException;
 import com.microservices.employeeservice.mapper.EmployeeMapper;
 import com.microservices.employeeservice.repository.EmployeeRepository;
-import com.microservices.employeeservice.services.ApiClient;
 import com.microservices.employeeservice.services.EmployeeService;
 
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.AllArgsConstructor;
 
@@ -41,13 +38,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         return saveEmployeeDto;
     }
 
-    // @CircuitBreaker(name = "${spring.application.name}", fallbackMethod = "getDefaultDepartment")
+    // @CircuitBreaker(name = "${spring.application.name}", fallbackMethod =
+    // "getDefaultDepartment")
     @Retry(name = "${spring.application.name}", fallbackMethod = "getDefaultDepartment")
     @Override
     public ApiResponseDto getEmployeebyId(Long employeeId) {
 
         Employee employee = repository.findById(employeeId).get();
-        var url = "http://localhost:8080/v1/departments/";
+        var url = "http://localhost:8089/v1/departments/";
+        var organizationUrl = "http://localhost:8083/api/organization/";
 
         // Utilizando Rest Template
         // ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity(url
@@ -66,11 +65,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         // DepartmentDto departmentDto =
         // apiClient.getDepartment(employee.getDepartmentCode());
 
+        OrganizationDto organizationDto = webClient.get()
+                .uri(organizationUrl + employee.getOrganizationCode())
+                .retrieve()
+                .bodyToMono(OrganizationDto.class)
+                .block();
+
         EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
 
         ApiResponseDto apiResponseDto = new ApiResponseDto();
         apiResponseDto.setEmployee(employeeDto);
         apiResponseDto.setDepartment(departmentDto);
+        apiResponseDto.setOrganization(organizationDto);
 
         return apiResponseDto;
     }

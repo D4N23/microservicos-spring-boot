@@ -1,4 +1,8 @@
-package com.microservices.employeeservice.entity;
+package com.organizationservice.organizationservice.entity;
+
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,25 +17,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "employees")
+@AllArgsConstructor
 @Entity
-public class Employee {
-    
+@Table(name = "organizations")
+public class Organization {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String firstName;
-
-    private String lastName;
-
+    @Column(nullable = false)
+    private String organizationName;
+    private String organizationdescription;
     @Column(nullable = false, unique = true)
-    private String email;
-
-    private String departmentCode;
-
     private String organizationCode;
+    @CreationTimestamp
+    private LocalDateTime createDate;
+
 }
